@@ -10,10 +10,10 @@
   "author": "fellypsantos2011@gmail.com",
   "license": "MIT",
   "dependencies": {
+    "bwip-js": "^2.0.8",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "html-pdf": "^2.2.0",
-    "pdfkit": "^0.11.0"
+    "html-pdf": "^2.2.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
