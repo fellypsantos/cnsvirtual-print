@@ -5,6 +5,8 @@ const routes = require('./src/routes');
 
 app.use(routes);
 
+app.use('/static', express.static(__dirname + '/public'));
+
 app.get('/', (request, response) => {
   response.send('Ambiente para geração de PDF do Cartão do SUS.');
 });
