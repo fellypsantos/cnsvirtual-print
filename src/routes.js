@@ -1,31 +1,21 @@
 const {Router} = require('express');
 const stream = require('stream');
-const pdfgen = require('html-pdf');
 const routes = Router();
+const helper = require('./helper');
 
-routes.get('/generatePDF', (request, response) => {
-  pdfgen
-    .create(htmlTemplate)
-    .toBuffer((err, buffer) => {
-      const fileContents = Buffer.from(buffer, 'binary');
-      const readStream = new stream.PassThrough();
-      readStream.end(fileContents);
+routes.get('/generatePDF/:userB64', async (request, response) => {
+  const user = JSON.parse(helper.Base64.atob(request.params.userB64));
+  const cardImageB64 = await helper.generateCardImageBase64(user);
+  const pdfBuffer = await helper.generateHTML2PDF(cardImageB64);
 
-      response.set('Content-disposition', 'attachment; filename=' + `${new Date().getTime()}.pdf`);
-      response.set('Content-Type', 'application/pdf');
+  const fileContents = Buffer.from(pdfBuffer, 'binary');
+  const readStream = new stream.PassThrough();
+  readStream.end(fileContents);
 
-      readStream.pipe(response);
-    })
+  response.set('Content-disposition', 'attachment; filename=' + `${user.nome}.pdf`);
+  response.set('Content-Type', 'application/pdf');
 
-  // response.json({ file: 'name.pdf' });
+  readStream.pipe(response);
 })
 
 module.exports = routes;
-
-/**
- * 
- * 1 -> pegar os dados e gerar a foto do cartão em base64
- * 2 -> usar o base64 do cartão e jogar dentro do HTMl pra montar o PDF
- * 3 -> iniciar o download
- * 
- */
