@@ -14,7 +14,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "html-pdf": "^2.2.0",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.3.1",
     "node-html-to-image": "^3.0.0"
   },
   "devDependencies": {
